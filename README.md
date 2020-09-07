@@ -29,7 +29,7 @@
 
 ## Representing Graphs: 
 
-- Adjacency matrix: is a very simple way to represent a graph. The idea is that the cell m[i][j] represents the edge weight of going from node i to node j. 
+Adjacency matrix: is a very simple way to represent a graph. The idea is that the cell m[i][j] represents the edge weight of going from node i to node j. 
 
 Pros: 
 + Space efficient for representing dense graphs 
@@ -41,7 +41,7 @@ Cons:
 + Iterating over all edges takes O(V^2) time
  
  
- - Adjacenct list: is a way to represent a graph as a map from nodes to list of edges. 
+ Adjacency list: is a way to represent a graph as a map from nodes to list of edges. 
 ```
 Example: A -> [(B,4), (C, 1)]
                B ->  [(C, 6)]
