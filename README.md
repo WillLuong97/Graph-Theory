@@ -144,3 +144,88 @@ the pipes, the number of cars the roads can sustain in traffic and the maximum a
 
 Algorithms: Ford-fulkerson, Edmonds-Karp and Dinic 's algorithm 
 
+
+## Depth First Search
+
+### Definition:
+
+- The Depth First Search (DFS) is the most fundamental search algorithm used to explore nodes and edges of a graph, this a form of graph traversal and easy to code 
+- Time complexity: 0 (V+E)
+
+- The problem it solves best is count connected components, determine connectivity, or find bridges/articulation, etc. 
+
+- As the name suggest, a DFS plunges depth first into a graph wihtout regard for which edge it takes next until it cannot go any further at which points it backtracks and continues. Also make sure to not revisit the vistited node. 
+
+- Algorithm Pseudocode: 
+```
+# Global or class scope variables: 
+n = number of nodes in the graph
+g = adjacency list representing graph
+visited = [false, false, ..., false] #size N
+
+function dfs(at):
+if visited[at]: return 
+vistied[at] = true
+
+neighbors = graph[at]
+for next in neighbours: 
+    dfs(next)
+    
+#start DFS at node zero:
+start_node = 0
+dfs(start_node)
+```
+
+### Connected Components: 
+
++ Definition: 
+
+Sometimes a graph is split into the multiple components. It's useful to be able to identify and count these component. For example, the yellow-colored group are in marked as 1 and the green-colored group are marked as 3
+
+![Algorithm Illustration](conected-comp.png)
+
+
+We can use a DFS to identify components. First, make sure all the nodes are labeled from [0, n) where n is the number of nodes. 
+
+Algorithm: Start a DFS at every node (except if it's already been visited) and mark all reachable nodes as being part of the same component
+
+![Algorithm Illustration](DFS-Illustration.png)
+
+Algorithm Pseudocode: 
+
+```
+# Glbale or class scope variables
+n = number of nodes in the graph
+g = adjacency list representing graph
+count = 0 
+components = empty integer array #size n
+visited = [false, ..., false] #size n
+
+function findComponents():
+    for(i = 0; i < n; i++):
+        if !vistied[i]:
+            count++
+            dfs(i)
+            
+    return [count, components]
+    
+function dfs(components):
+    visited[at] = true
+    components[at] = count
+    
+    for next in g[at]:
+        if !visited[next]:
+            dfs(next)
+```
+
+### What else can DFS do? 
+
++ Computer a graph's minimum spanning tree
++ Detect and find cycles in a graph. 
++ Check if a graph is bipartite
++ Find strongly connected components
++ Topologically sort the nodes of the graph
++ Find bridges and articulation points
++ Find augmenting paths in a flow network
++ Generate mazes. 
+
