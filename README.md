@@ -32,13 +32,13 @@
 - Adjacency matrix: is a very simple way to represent a graph. The idea is that the cell m[i][j] represents the edge weight of going from node i to node j. 
 
 Pros: 
-    + Space efficient for representing dense graphs 
-    + Edge weight lookup is O(1)
-    + Simplest graph representation
++ Space efficient for representing dense graphs 
++ Edge weight lookup is O(1)
++ Simplest graph representation
     
 Cons: 
-    + Requires 0(V^2) space
-    + Iterating over all edges takes O(V^2) time
++ Requires 0(V^2) space
++ Iterating over all edges takes O(V^2) time
  
  
  - Adjacenct list: is a way to represent a graph as a map from nodes to list of edges. 
@@ -49,25 +49,25 @@ Example: A -> [(B,4), (C, 1)]
                D -> []
 ```
 Pros: 
-    + Space efficient for representing sparse graphs 
-    + Iterating over all edges is efficient
++ Space efficient for representing sparse graphs 
++ Iterating over all edges is efficient
 
 Cons:
-    + Less space efficient for denser graph. 
-    + Edge weight lookup is O(E)
-    + Slightly more complex graph representation
++ Less space efficient for denser graph. 
++ Edge weight lookup is O(E)
++ Slightly more complex graph representation
 
 
 - Edge list: a way to represent a graph simply as an unordered list of edges. Assume the notation for any triplet (u,v,w) means: "the cost from node u to node v is w". However, this representation is seldomly used
 because it is not structured 
 
 Pros: 
-    + Space efficient for representing sparse graphs
-    + Iterating over all edges is effcient 
-    + Very simple structure 
++ Space efficient for representing sparse graphs
++ Iterating over all edges is effcient 
++ Very simple structure 
 
 Cons: 
-    + Less space efficient for denser graph 
-    + Edge weight lookup is O(E)
++ Less space efficient for denser graph 
++ Edge weight lookup is O(E)
 
 
