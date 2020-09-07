@@ -70,4 +70,77 @@ Cons:
 + Less space efficient for denser graph 
 + Edge weight lookup is O(E)
 
+## Common Graph Theory Problems
+
+Before solving the problems, ask yourself these question: 
+
+1. Is the graph directed or undirected? 
+2. Are the edges of the graph weighted? 
+3. Is the graph I will encounter likely to be sparse or dense with edges? 
+4. Should I use an adjacency matrix, adjacency list, an edge list or other structure to represent the graph efficiently? 
+
+
+### Shortest path problem: 
+
+Given a weighted graph, find the shortest path of edges from node A to node B
+
+Algorithms: BFS (unweighted graph), A*, Dijkstras, Bellman-ford, etc. 
+
+### Connectivity: 
+
+Does there exist a path between node A and node B? 
+
+Typical solution: Use union find data structure or any search algorithm (DFS)
+
+### Negative cycles: 
+
+Does my weighted digraph have any negative cycles? If so, where?   
+
+Algorithms: Bellman-Ford and Floyd-Warshall 
+
+
+### Strongly Connected Components
+
+Strongly Connected Components (SCCs) can be thought of as self-contained cycles within a directed graph where every vertex in a given cycle can reach every other vertex in the same cycle 
+
+Algorithm: Tarijan's and Kosaraju's algorithm
+
+### Travelling Salesman Problem:
+
+Given a list of cities and the distance between each pair of cities, what is the shortest possible route that visit each city exactly once and returns to the origin city? 
+
+Algorithm: Held-Karp, branch and bound and many approximation algorithms
+
+The TSP problem is NP-Hard meaning it s very computationally challenging problem. 
+
+### Bridges: 
+
+A bridge/ cut edge is any edge in a graph whose removal increases the number of connected components. 
+
+Bridges are important in graph theory because they often hint at weak points, bottleneck or vulnerabilities in a graph 
+
+### Articulation points: 
+
+An articulation points / cut vertex is any node in a graph whose removal increases the number of connected components.
+
+Articulation points are important in graph theory because they often hint at weak points, bottlenecks or vulnerabilities in a graph.
+
+
+### Minimum Spanning Tree (MST)
+
+A minimum Spanning Tree is a subset of the edges of a connected, edge-weighted graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight. 
+
+Algorithms: Kruskal, Prim's Boruvka's Algorithm 
+
+MST are seen in many applications including: Designing a least cost network, circuit design, transporation networks, and etc. 
+
+
+### Network Flow:  Max Flow
+
+With an infinite source how much "flow" can we push through the network? 
+
+Suppose the edges are roads with cars, pipes with water or hallways with packed with people. Flow represents the volume of water allowed to flow through 
+the pipes, the number of cars the roads can sustain in traffic and the maximum amount of people that can navigate through the hallways 
+
+Algorithms: Ford-fulkerson, Edmonds-Karp and Dinic 's algorithm 
 
