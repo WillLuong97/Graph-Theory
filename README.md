@@ -296,3 +296,17 @@ fucntion reconstructPath(s,e, prev):
     return []
 ```
 
+### Grid
+
+- Many problems in graph theory can be represented using a grid. Grids are a form of implicit graph
+because we can determine a node's neighbours based on our location within the grid. 
+
+- A common approach to solving graph theory problems on grids is to first convert the grid to a familiar format such as an adjacency list/matrix
+
+![Grid Illustration](Screen Shot 2020-09-14 at 10.19.07 PM.png)
+
+Once we have an adjacency list/matrix we can run whatever specialized graph algorithm to solve our problem such as:  shortest path, connected components, etc...
+
+However, transformations between graph representation can usually be avoided due to the structure of grid. 
+
+
