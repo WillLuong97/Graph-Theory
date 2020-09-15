@@ -229,3 +229,70 @@ function dfs(components):
 + Find augmenting paths in a flow network
 + Generate mazes. 
 
+## Breadth First Search
+
+### Definition
+
+- The Breadth First Searc (BFS) is another fundamental search algorithm used to explore nodes and edges of a graph. It runs with a time
+complexity of O(V+E) and is often used as building block in other algorithm. 
+
+- The BFS algorithm is particularly useful for one thing: finding the shortest path on unweighted graphs. 
+
+### Structure
+
+- A BFS starts at some arbitrarily node of a graph and explores the neighbour nodes first, before moving to the next level neighbours. 
+- A BFS explores a graph at a layer fashion, this is maintained through a queue of which nodes the algorithm should visit next. 
+
+- Using a Queue: 
++ The BFS algorithm uses a queue data structure to track which node to visit next. Upon reaching  a new node the  algorithm adds it to the 
+queue to visit it later. The queue data structure works just like a real world queue such as waiting line at a restaurant. 
++ People can either enter the waiting line (enqueue) or get seated (dequeue). 
+
+### Psuedo code
+
+```
+#Global/class node scope variable
+n = number of node in the graph 
+g = adjacency list representing unweighted graph 
+
+# s = start, e = end node and 0 <= e, s < n
+function bfs(s, e):
+    #do a BFS startring at node s
+    prev = solve(s)
+
+    #return reconstucted path from s -> e
+    return reconstructPath(s, e, prev)
+
+fucntion solve(s): 
+    q = queue data structure with enqueue and dequeue
+    q.enqueue(s)
+    
+    vistied = [false,..., false] #size n
+    visited[s] = true
+    prev = [null,..,null] #size n
+    
+    while !q.isEmpty():
+        node = q.dequeue()
+        neighbours  = g.get(node)
+        
+        for(next:neighbours): 
+            if !visited[next]:
+                q.enqueue(next)
+                visited[next] = true 
+                prev[next] = node
+                
+    return prev
+    
+fucntion reconstructPath(s,e, prev): 
+    #reconstruct path going backwards from e
+    path = []
+    for(at = e; at != null; at=prev[at]):
+        path.add(at)
+        path.reverse()
+    
+    #if s and e are connected return the path
+    if path[0] == s: 
+        return path
+    return []
+```
+
