@@ -58,7 +58,7 @@ Cons:
 + Slightly more complex graph representation
 
 
-- Edge list: a way to represent a graph simply as an unordered list of edges. Assume the notation for any triplet (u,v,w) means: "the cost from node u to node v is w". However, this representation is seldomly used
+Edge list: a way to represent a graph simply as an unordered list of edges. Assume the notation for any triplet (u,v,w) means: "the cost from node u to node v is w". However, this representation is seldomly used
 because it is not structured 
 
 Pros: 
