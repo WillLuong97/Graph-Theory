@@ -244,9 +244,9 @@ complexity of O(V+E) and is often used as building block in other algorithm.
 - A BFS explores a graph at a layer fashion, this is maintained through a queue of which nodes the algorithm should visit next. 
 
 - Using a Queue: 
-+ The BFS algorithm uses a queue data structure to track which node to visit next. Upon reaching  a new node the  algorithm adds it to the 
-queue to visit it later. The queue data structure works just like a real world queue such as waiting line at a restaurant. 
-+ People can either enter the waiting line (enqueue) or get seated (dequeue). 
+    + The BFS algorithm uses a queue data structure to track which node to visit next. Upon reaching  a new node the  algorithm adds it to the 
+    queue to visit it later. The queue data structure works just like a real world queue such as waiting line at a restaurant. 
+    + People can either enter the waiting line (enqueue) or get seated (dequeue). 
 
 ### Psuedo code
 
