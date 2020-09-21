@@ -308,6 +308,16 @@ because we can determine a node's neighbours based on our location within the gr
 - Once we have an adjacency list/matrix we can run whatever specialized graph algorithm to solve our problem such as:  shortest path, connected components, etc...
 - However, transformations between graph representation can usually be avoided due to the structure of grid. 
 
+### Direction Vectors:
+
+- Mathematically, assume there is a red ball in the middle of a grid,  If the red ball is at the row column coordinate (r, c) we can add the row vectors [-1, 0], [1,0], [0, 1], [0, -1] to reach the adjacent cells
+
+![Directional Vector Illustration](directional_vector_basic.png)
+
+- If the problem, you are trying to solve allows moving diagonally then you can also include the row vectors: [-1,-1], [-1,1], [1, 1], [1, -1]
+
+![Directional Vector Illustration](directional_vector_diagonal.png)
+
 
 
 
