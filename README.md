@@ -319,6 +319,27 @@ because we can determine a node's neighbours based on our location within the gr
 ![Directional Vector Illustration](directional_vector_diagonal.png)
 
 
+- This makes it very easy to access neihboring cells from the current-row column position: 
 
+```
+# Define the direction vectors 
+# north, south, east and west 
+dr = [-1, 1, 0, 0]
+dc = [0, 0, 1, -1]
+
+R = len(dr)
+C = len(dc)
+
+for( i = 0; i < 4; i++): 
+    rr = r + dr[i]
+    rc = c + dc[i]
+    
+    #skip invalid cells. Assume R and C for the number of rows and columns
+    
+    if rr < 0 or cc < 0: continue
+    if rr >= R or cc >= C: continue
+    #(rr, cc) is a neihboring cells of (r, c)
+
+```
 
 
