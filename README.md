@@ -303,7 +303,7 @@ because we can determine a node's neighbours based on our location within the gr
 
 - A common approach to solving graph theory problems on grids is to first convert the grid to a familiar format such as an adjacency list/matrix
 
-![Grid Illustration](gridToGraph.png.png)
+![Grid Illustration](gridToGraph.png)
 
 - Once we have an adjacency list/matrix we can run whatever specialized graph algorithm to solve our problem such as:  shortest path, connected components, etc...
 - However, transformations between graph representation can usually be avoided due to the structure of grid. 
