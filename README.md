@@ -341,11 +341,94 @@ for( i = 0; i < 4; i++):
     #(rr, cc) is a neihboring cells of (r, c)
 ```
 
-### Dungeon Problem Statement (Shortest Path)
+## Dungeon Problem Statement (Shortest Path)
 
-- Problem statement: 
+### Problem statement: 
 
 'You are trapped in a 2D dungeon and need to find the quickest way out! The dungeon is composed of unit cubes which may or may not be filled with rock. 
 It takes one minute to move one unit north, sout, east and west. You cannot move diagonally and the maze is all surrounded by solid rock on all sides.'
 
 ![Directional Vector Illustration](dungeonProblemStatement.png)
+
+The dungeon has a sizes of R x C and you start at cell 'S' and there's an exit at cell 'E'. A cell full of rock is indicated by a '#' and empty cells are represented by a '.'
+
+### Algorithm: 
+
++ Start at the start ndoe coordinate by adding (X0, Y0) into the queue. 
++ We reached the end if the node we are looking at is the ending node and if we had a 2d previously visited node matrix we could generate the path by retracing our steps. 
+
+
+### Pseudocode: 
+
+```
+R, C # R = number of rows, C = Number of columns
+
+m = [] #input character martix of size RXC
+sr, sc = ... #'S' symbol row and column values
+rq, cq = ... #Empty Row Queue (RQ) and Column Queue (CQ) 
+
+#Variable used to track the number of steps taken.
+move_count = 0
+nodes_left_in_layer = 1
+nodes_in_next_layer = 0
+
+#variable used to track whether the 'E' character ever get reached during BFS
+reached_end = false
+
+# RXC martix of false values used to track whether the node at position (i, j) has been visited. 
+visited = ...
+
+#North, south, east, west direction vectors. 
+dr = [-1, 1, 0, 0]
+dc = [0, 0, 1, -1]
+
+#main function to solve the problem
+function solve():
+    rq.enqueue(sr)
+    cq.enqueue(sc)
+    visited[sr][sc] = true
+
+    while rq.size() > 0: 
+        r = rq.dequeue()
+        c = cq.dequeue()
+
+        if m[r][c] == 'E':
+            reached_end = true
+            break 
+            
+        explore_neighbors(r, c)
+        nodes_left_in_layer--
+        
+        if nodes_left_in_layer == 0:
+            nodes_left_in_layer = nodes_in_next_layer
+            nodes_in_next_layer = 0
+            move_count++
+            
+    if reached_end:
+        return move_count
+        
+    return -1
+    
+funcion explore_neighbors(r, c):
+    for(i < 0; i < 4; i++):
+        rr = r + dr[i]
+        cc = c + dr[c]
+        
+        #skip the out of bound locations: 
+        if rr < 0 or cc < 0: continue 
+        if rr >= 0 or cc >= C: continue
+        
+        
+        #skip visited locations or blocked cells: 
+        if visited[rr][cc]: continue
+        if m[rr][cc] == '#': continue
+        
+        rq.enqueue(rr)
+        ce.dequeue(cc)
+        visited[rr][cc] = true
+        
+        nodes_in_next_layer++
+```
+
+
+
