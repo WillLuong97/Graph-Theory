@@ -103,7 +103,6 @@ Input: numCourses = 2, prerequisites = [[1,0]]
 Output: [0,1]
 Explanation: There are a total of 2 courses to take. To take course 1 you should have finished course 0. So the correct course order is [0,1].
 Example 2:
-
 Input: numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
 Output: [0,2,1,3]
 Explanation: There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0.
@@ -125,17 +124,45 @@ All the pairs [ai, bi] are distinct.
 
 '''
 def findOrder(numCourses , prerequisites):
-    #base case: 
-    if not numCourses: 
-        return []
+    # #base case: 
+    # if not numCourses: 
+    #     return []
 
-    if not prerequisites:
-        return [0]
+    # if not prerequisites:
+    #     return [0]
 
     #result array that would store the path: 
     path = []
-    
+    #create an array to store the state of each visited neighbor
+    visited_state = [0 for _ in range(numCourses)]
+    #create a dictionary to store the node and its neighbor
+    graphNodeDict = defaultdict(list)
+    cycle_check = []
+    #create an adjacency list from the node and neighbors
+    for node, neighbor in prerequisites:
+        graphNodeDict[neighbor].append(node)
 
+    #helper method to run the dfs algorithm to check for any cycles in the graph list
+    def isCycleOrNot(node):
+        #procesing new nodes
+        visited_state[node] = -1
+        #loop through the neighbor of the current node 
+        for neighbor in graphNodeDict[node]:
+            if 0 == visited_state[neighbor]:
+                isCycleOrNot(neighbor)
+                
+            if -1 == visited_state[neighbor]:
+                return False
+            
+        #finishe processing this node
+        visited_state[node] = 1
+        path.append(node)
+        return True
+
+    for course in range(numCourses):
+        if 0 == visited_state[course]:
+            cycle_check.append(isCycleOrNot(course))
+    return path[::-1] if all(cycle_check) else []
             
 #main function to run the program
 def main():
@@ -149,7 +176,18 @@ def main():
 
     print("")
     print("TESTING COURSE SCHEDULE II...")
-    
+    test_num_courses_2 = 2
+    test_prereq_2 = [[1,0]]
+
+    test_num_courses_3 = 4
+    test_prereq_3 = [[1,0],[2,0],[3,1],[3,2]]
+
+    test_num_courses_4 = 1
+    test_prereq_4 = []
+    print(findOrder(test_num_courses_2, test_prereq_2))
+    print(findOrder(test_num_courses_3, test_prereq_3))
+    print(findOrder(test_num_courses_4, test_prereq_4))
+
     print("END OF TESTING...")
 
 main()
