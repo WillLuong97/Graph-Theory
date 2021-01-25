@@ -25,8 +25,7 @@
 
 - On the recursive callback of DFS, add the current node to the toplogical sort odering in reverse order. 
 
-
-## Top Sort Algorithm: 
+## Pseudocode: 
 
 ```
 #assumption: graph is stored as an adjacency list
