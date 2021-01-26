@@ -45,9 +45,9 @@ class Graph:
 		
 		#helper method to run the dfs through the graph through recursion
 		def dfs(v, visited, stack):
-			
+			#marking the visited element true	
 			visited[v] = True
-			
+			#loop through its neighbor
 			for neighbor in self.graph_list[v]:
 				if not visited[neighbor]:
 					dfs(neighbor, visited, stack)
@@ -59,8 +59,50 @@ class Graph:
 				dfs(node_index, visited, stack)
 		return stack
 
- 
+ 	#Function to run dfs on a graph
+	def depthFirstSearch(self):
+		#base case: 
+		if not self.graph_list:
+			return []
+
+		visited = [False] * self.vertices
+		
+		stack = []
+		
+		#loop through the graph and run dfs on the current node neighbor
+		for vertices in range(self.vertices):
+			if not visited[vertices]:
+				self.depthFirstSearch_UTILS(vertices, visited, stack)
+
+		return stack
 	
+	#helper method to run dfs recursively on all the neighboring nodes
+	def depthFirstSearch_UTILS(self, vertex, visited, stack):
+		#mark the current vertex to be visited 
+		visited[vertex] = True
+		#check on the neighbor of the current Node 
+		for neighbor in self.graph_list[vertex]:
+			if not visited[neighbor]:
+				self.depthFirstSearch_UTILS(neighbor, visited, stack)
+		stack.append(vertex)
+
+
+			 
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 #Main function to run the test cases: 
 def main():
@@ -75,7 +117,12 @@ def main():
 	g.addEdge(3, 1); 
 
 	g.show_edges()
+	print("The top sort ordering of the graph is: ")
 	print(g.topSort())
+	print("")
+
+	print("The dfs algorithm output of the graph is:  ", g.depthFirstSearch())
+
 	print("END OF TESTING...")
 main()
 
