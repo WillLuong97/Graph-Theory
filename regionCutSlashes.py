@@ -13,6 +13,17 @@ Input:
   " /",
   "/ "
 ]
+
+
+
+[ "0 1 "
+  "0 1 "
+]
+
+observation: if the same slashes are diagonal to each other then it can be combined together and divide a bigger region, matrix[i-1][j-1] == matrix[i][j]
+
+Otherwise, 
+
 Output: 2
 Explanation: The 2x2 grid is as follows:
 
@@ -58,124 +69,94 @@ Input:
 Output: 3
 Explanation: The 2x2 grid is as follows:
 
- 
-
 Note:
 
 1 <= grid.length == grid[0].length <= 30
 grid[i][j] is either '/', '\ , or ' '.
 
-'''
+We will apply dfs to solve this problem by converting each slashes into a 1, regardless of its being backwards or forwards. 
+Example: 
+"/"
+0 0 1
+0 1 0
+1 0 0 
+To do this, we will create a new matrix with the same dimension as the array of string but add in extra borders, which are all 0's
+
+with 1 being the slashes or line and 0's being the open space, we will apply dfs to count the connected components of 0s and retunr the final number
 
 '''
-
-Observation:
- 
-Grid is a 2x2 array of string values; and the length of each string represent how many 1x1 squares are in line. 
-The value contains in each string is a slash and it can be used to divide the grid into regions
-Any diagonal slashses of the same kind can be morphed into bigger slash and divide a larger region of the grid. 
-
-Requirements:
-1. loop through each string and keep track of the slashes and its type, whether it is "/" or "\\"
-2. Check if any slashse can be morphed into a biggger slash and can divide a bigger region
-3. Divide the region based on the slash type and count the regions.
-
-
-
-Approach: Breadth first search: 
-'''
+#helper method to perform dfs on the updated grid to find connected 0s parts: 
+def dfs(matrix, i, j):
+	#check to see if the node is valid or not
+	#1st - not a border but still within the boundary 
+	if i >= 0 and i < len(matrix) and  j >= 0 and j < len(matrix) and matrix[i][j] == 0:
+		#another way of keeping track of the visited element, by making it equal to 1, we will ignore in the algorithm, when we backtrack 
+		matrix[i][j] = 1
+		#branch out to the neighboring node recursively
+		dfs(matrix, i+1,j)
+		dfs(matrix, i, j+1)
+		dfs(matrix, i, j-1)
+		dfs(matrix, i-1, j)
+		#finding the connected component, the connected component are 0s that are sitting right next to each other
+		if i%2 != j%2:
+			dfs(matrix, i+1, j+1)
+		if i%2 == j%2:
+			dfs(matrix, i+1, j-1)
+		if i%2 != j%2:
+			dfs(matrix, i-1, j-1)
+		if i%2 == j%2:
+			dfs(matrix, i-1, j+1)
+		
 def regionsBySlashes(grid):
-	#base case: 
-	if not grid: 
+	#bsae case: 
+	if not grid or not len(grid):
 		return 0 
-	#creating a garph from the representation by adding 4 triangle
-	#to represent as the graph node
-	R = len(grid)
-	C = len(grid[0])
-	#a queue data structure to store the graph node
-	allSection = set()
-	#graph node that can be slashed by the \\ slash
-	dir1 = [1, 0, 3, 2]
-	#graph node that can be slashed by the  / slash
-	dir2 = [3,2,1,0] 
 	
-	#loop through the matrix and start slashing and counting the region
-	for i in range(R):
-		for j in range(C):
-			for k in range(4):
-				#append the coordinate and graph node onto the queue
-				allSection.add((i,j,k))
-	#helper method to find all conected graph node and count the number of regions from there
-	def findConnectedComponents(square):
-		#getting the row and column:
-		i = square[0]
-		j = square[1]
-
-		#checking for the slashes: 
-		#return the region after getting slashed by \\
-		if grid[square[0]][square[1]]== "\\":
-			yield (i, j, dir1[square[2]])
-			if square[2] <= 1: 
-				if i - 1 >= 0:
-					yield (i-1, j, 2)
-				if j+1 < C:
-					yield (i, j+1, 3)	
-		#return the region slashed by /	
-		else if grid[square[0]][square[1]] == "/":
-			yield (i, j, dir2[square[2]])
-
-		#otherwise, no slashes return all connected graph node
-		else: 
-			for node in range(4):
-				if node != 2: 
-					yield (i, j+1, node)
-			yield (i-1, j, 2)
-			yield (i+1, j, 0)
-			yield (i, j-1, 1)
-			yield (i, j+1, 3)
-			
+	count = 0
+	#getting the row and column of the matrix
+	m = len(grid)
+	n = len(grid[0])
+	#create a new grid to store 0 and 1 representation of the slashes
+	#the matrix has twice the length because of the extra border built in
+	zero_one_grid = [[0 for j in range(2*m)] for i in range(2*m)]
+	#adding 1 to the grid 
+	for i in range(m):
+		for j in range(m):
+			#converting the slashes into a one
+			if grid[i][j] == "/":
+				zero_one_grid[2*i][2*j+1] = 1
+				zero_one_grid[2*i+1][2*j] = 1
+			if grid[i][j] == "\\":
+				zero_one_grid[2*i][2*j] = 1
+				zero_one_grid[2*i+1][2*j+1] = 1
+	for i in range(len(zero_one_grid)):
+		for j in range(len(zero_one_grid)):
+			if zero_one_grid[i][j] == 0:
+				count += 1
+				dfs(zero_one_grid, i, j)
+	return count
+				
 	
-	result = 0 
-	#checking all possible section with graph node and pass them into the 
-	#bfs function and it will return back how many actual component are still connected after 
-	#slashes
-	while(len(allSection) > 0):
-		start = []
-		#pop the element out from the queue
-		#put these element into a seperate array so that we can start running bfs
-		start.append(allSection.pop())
-		while start: 
-			current_square = start.pop(0)
-			allSection.discard(current_square)
-			for neighbor in findConnectedComponents(current_square):
-				if neighbor in allSection:
-					allSection.discard(neighbor) 
-					start.append(neighbor)
-
-		result += 1	
-	
-	return result
-					
 #Main function to run the test cases: 
 def main():
 	print("TESTING REGIONS CUT BY SLASHES...")
-	# grid = [
-	#   " /",
-	#   "/ "
-	# ] 
-	# print(regionsBySlashes(grid))
-#	grid = [
-#	  " /",
-#	  "  "
-#	]
-#
-#	print(regionsBySlashes(grid))
-#
-#	grid = [
-#	  "/\\",
-#	  "\\/"
-#	]
-#	print(regionsBySlashes(grid))
+	grid = [
+	  " /",
+	  "/ "
+	] 
+	print(regionsBySlashes(grid))
+	grid = [
+	  " /",
+	  "  "
+	]
+
+	print(regionsBySlashes(grid))
+
+	grid = [
+	  "/\\",
+	  "\\/"
+	]
+	print(regionsBySlashes(grid))
 
 	grid = [
 	  "//",
@@ -185,10 +166,5 @@ def main():
 	print(regionsBySlashes(grid))
 	print("END OF TESTING...")
 
-
-
 main() 
-
-
-
 
